@@ -1,0 +1,16 @@
+Salvedades:
+
+El programa necesita de dos archivos EXCEL: Uno de ellos
+es el modelo y el otro es el archivo de pago donde
+se anidarán los datos.
+
+Ambos archivos deben estar en EL MISMO DIRECTORIO que
+el script para que funcione.
+
+Si se encuentran errores para encontrar estos archivos,
+lo recomendable es renombrar los excel a un formato
+sin espacios. 
+
+Otro error puede ocurrir si la cantidad de datos en la
+columna "DNI" del modelo no coincide con la cantidad
+de datos en la columna de "BANCO". 

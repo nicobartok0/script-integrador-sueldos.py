@@ -10,27 +10,34 @@ nombre_pago = f'{nombre1_pago}.xlsx'
 modelo = load_workbook(nombre_modelo, data_only=True)
 pago = load_workbook(nombre_pago, data_only=True)
 
-ws_modelo = modelo['Base']
-ws_pago = pago['Sheet0']
+ws_modelo = modelo[modelo.sheetnames[0]]
+ws_pago = pago[pago.sheetnames[0]]
 
 dnis = []
 montos = []
 dni_montos = {}
-for column_data in ws_modelo['A']:
+for column_data in ws_modelo['C']:
     if column_data.value != None and column_data.value != 'DNI':
         dnis.append(str(column_data.value))
 
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
-    for column_data in ws_modelo['AI']:
+    for column_data in ws_modelo['AG']:
         if column_data.value != None and column_data.value != 'BANCO':
             montos.append(str(column_data.value))
+
+montos_final = []
+for monto in montos:
+    #print(round(float(monto), 2))
+    monto = float(monto)
+    monto = f'{monto:.2f}'
+    montos_final.append(monto)
 
 contador = 0
 print(len(dnis))
 print(len(montos))
 for dni in dnis:
-    dni_montos[dni] = montos[contador]
+    dni_montos[dni] = montos_final[contador]
     contador += 1 
 
 for row in ws_pago.iter_rows():

@@ -33,6 +33,7 @@ for monto in montos:
     monto = f'{monto:.2f}'
     montos_final.append(monto)
 
+
 contador = 0
 print(len(dnis))
 print(len(montos))

@@ -1,5 +1,6 @@
 from openpyxl import load_workbook, Workbook
 import warnings
+import time
 
 nombre_modelo = str(input("Ingrese el nombre del modelo: "))
 nombre1_pago = str(input("Ingrese el nombre de la planilla de pagos: "))
@@ -25,27 +26,38 @@ with warnings.catch_warnings():
     for column_data in ws_modelo['AG']:
         if column_data.value != None and column_data.value != 'BANCO':
             montos.append(str(column_data.value))
+        if column_data.value == None:
+            montos.append('0')
 
 montos_final = []
 for monto in montos:
     #print(round(float(monto), 2))
-    monto = float(monto)
-    monto = f'{monto:.2f}'
+    if monto != ' ':
+        monto = float(monto)
+        monto = f'{monto:.2f}'
+    else:
+        monto = 0,00
     montos_final.append(monto)
 
 
 contador = 0
 print(len(dnis))
-print(len(montos))
+print(len(montos_final))
 for dni in dnis:
+    montos_final[contador] = montos_final[contador].replace('.', ',')
     dni_montos[dni] = montos_final[contador]
     contador += 1 
+
 
 for row in ws_pago.iter_rows():
     
     if row[2].value in dnis:
         row[5].value = dni_montos[row[2].value]
-    else:
-        print('Formato incorrecto')
 
 pago.save(f"{nombre1_pago}-INTEGRADO.xlsx")
+
+print('Completado con éxito.')
+
+while True:
+    time.sleep(1)
+    print('Completado con éxito. Puede cerrar el Script.')
